@@ -43,7 +43,7 @@ Java 1.8 installation is required to run the program.
 You can install Java 8 from [AdoptOpenJDK.net](https://adoptopenjdk.net/?variant=openjdk8&jvmVariant=openj9).
 
 To run the program,
- - Download the `SwingTextEditor-*.zip` or the `SwingTextEditor-*.tar` file from the [releases](./releases) page.
+ - Download the `SwingTextEditor-*.zip` or the `SwingTextEditor-*.tar` file from the [releases](/releases) page.
  - Extract the zip file to wherever you like and open the `SwingTextEditor-*` folder.
  - On windows, double click the `./bin/SwingTextEditor.bat` file.
  - On linux/MAC, run the `./bin/SwingTextEditor` file.
