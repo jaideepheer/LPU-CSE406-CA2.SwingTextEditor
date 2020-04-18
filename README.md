@@ -1,4 +1,4 @@
-# CSE403 – CA2
+# CSE406 – CA2
 > Jaideep Singh Heer
 ---
 ![Pre-Release](https://github.com/jaideepheer/LPU-CSE406-CA2.SwingTextEditor/workflows/Pre-Release/badge.svg)
