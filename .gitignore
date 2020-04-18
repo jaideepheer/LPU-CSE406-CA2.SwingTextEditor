@@ -3,3 +3,6 @@
 /build/
 /build/classes/java/main/
 /out/
+
+# core dumps
+core.*
