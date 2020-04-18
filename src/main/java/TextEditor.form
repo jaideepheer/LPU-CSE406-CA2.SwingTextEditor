@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="TextEditor">
+  <grid id="27dc6" binding="mainPanel" layout-manager="BorderLayout" hgap="0" vgap="0">
+    <constraints>
+      <xy x="20" y="20" width="500" height="400"/>
+    </constraints>
+    <properties/>
+    <border type="none"/>
+    <children>
+      <grid id="6d0d1" class="javax.swing.JMenuBar" layout-manager="FlowLayout" hgap="5" vgap="2" flow-align="0">
+        <constraints border-constraint="North"/>
+        <properties/>
+        <border type="none"/>
+        <children>
+          <grid id="de68" class="javax.swing.JMenu" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
+            <constraints/>
+            <properties>
+              <font/>
+              <text value="File"/>
+            </properties>
+            <border type="none"/>
+            <children>
+              <component id="73cc6" class="javax.swing.JMenuItem" binding="newMenuItem">
+                <constraints/>
+                <properties>
+                  <text value="New"/>
+                </properties>
+              </component>
+              <component id="aa9f3" class="javax.swing.JMenuItem" binding="openMenuItem">
+                <constraints/>
+                <properties>
+                  <text value="Open"/>
+                </properties>
+              </component>
+              <component id="ff3bd" class="javax.swing.JSeparator">
+                <constraints/>
+                <properties/>
+              </component>
+              <component id="eacd7" class="javax.swing.JMenuItem" binding="saveMenuItem">
+                <constraints/>
+                <properties>
+                  <text value="Save"/>
+                </properties>
+              </component>
+              <component id="ab5b6" class="javax.swing.JMenuItem" binding="saveAsMenuItem">
+                <constraints/>
+                <properties>
+                  <text value="Save As"/>
+                </properties>
+              </component>
+              <component id="dc07" class="javax.swing.JSeparator">
+                <constraints/>
+                <properties/>
+              </component>
+              <component id="14ace" class="javax.swing.JMenuItem" binding="exitMenuItem">
+                <constraints/>
+                <properties>
+                  <text value="Exit"/>
+                </properties>
+              </component>
+            </children>
+          </grid>
+          <grid id="8a431" class="javax.swing.JMenu" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
+            <constraints/>
+            <properties>
+              <enabled value="true"/>
+              <text value="Edit"/>
+            </properties>
+            <border type="none"/>
+            <children>
+              <component id="888a1" class="javax.swing.JMenuItem">
+                <constraints/>
+                <properties>
+                  <text value="Clear"/>
+                </properties>
+              </component>
+            </children>
+          </grid>
+          <grid id="da391" class="javax.swing.JMenu" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
+            <constraints/>
+            <properties>
+              <text value="Help"/>
+            </properties>
+            <border type="none"/>
+            <children>
+              <component id="e1d2a" class="javax.swing.JMenuItem" binding="aboutMenuItem">
+                <constraints/>
+                <properties>
+                  <text value="About"/>
+                </properties>
+              </component>
+            </children>
+          </grid>
+        </children>
+      </grid>
+      <scrollpane id="10b4c" binding="mainTextScrollPane">
+        <constraints border-constraint="Center"/>
+        <properties/>
+        <border type="none">
+          <font/>
+          <title-color color="-4473925"/>
+        </border>
+        <children>
+          <component id="8dc4f" class="javax.swing.JTextArea" binding="mainTextArea">
+            <constraints/>
+            <properties/>
+          </component>
+        </children>
+      </scrollpane>
+      <grid id="b110" layout-manager="GridBagLayout">
+        <constraints border-constraint="South"/>
+        <properties/>
+        <border type="none"/>
+        <children>
+          <component id="4c40a" class="javax.swing.JLabel" binding="cursorPositionLabel">
+            <constraints>
+              <grid row="0" column="3" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+              <gridbag weightx="0.0" weighty="0.0" ipadx="10"/>
+            </constraints>
+            <properties>
+              <text value="Ln 1, Col 1"/>
+            </properties>
+          </component>
+          <component id="7f06c" class="javax.swing.JSeparator">
+            <constraints>
+              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+              <gridbag weightx="0.0" weighty="0.0" ipadx="10"/>
+            </constraints>
+            <properties>
+              <orientation value="1"/>
+            </properties>
+          </component>
+        </children>
+      </grid>
+    </children>
+  </grid>
+</form>

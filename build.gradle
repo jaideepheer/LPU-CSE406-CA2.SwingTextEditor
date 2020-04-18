@@ -1,0 +1,32 @@
+plugins {
+    id 'java'
+    id 'application'
+}
+
+group 'jd.cse.lpu'
+version '0.1.0'
+def mainClass = "main"
+
+ext {
+    javaMainClass = mainClass
+}
+
+application {
+    mainClassName = mainClass
+}
+
+jar {
+    manifest {
+        attributes 'Main-Class': mainClass
+    }
+}
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}
