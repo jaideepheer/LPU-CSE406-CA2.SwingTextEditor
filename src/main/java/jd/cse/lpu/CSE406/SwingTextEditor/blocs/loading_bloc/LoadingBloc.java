@@ -1,6 +1,6 @@
-package blocs.loading_bloc;
+package jd.cse.lpu.CSE406.SwingTextEditor.blocs.loading_bloc;
 
-import bloc_lib.Bloc;
+import jd.cse.lpu.CSE406.SwingTextEditor.bloc_lib.Bloc;
 
 public class LoadingBloc extends Bloc<LoadingEvent, LoadingState> {
     @Override

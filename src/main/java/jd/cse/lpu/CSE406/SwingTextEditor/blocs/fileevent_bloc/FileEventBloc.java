@@ -1,11 +1,16 @@
-package blocs.fileevent_bloc;
+package jd.cse.lpu.CSE406.SwingTextEditor.blocs.fileevent_bloc;
 
-import bloc_lib.Bloc;
-import bloc_lib.StateListener;
-import blocs.loading_bloc.LoadingBloc;
-import blocs.loading_bloc.LoadingEvent;
-import blocs.loading_bloc.LoadingState;
+import jd.cse.lpu.CSE406.SwingTextEditor.bloc_lib.Bloc;
+import jd.cse.lpu.CSE406.SwingTextEditor.bloc_lib.StateListener;
+import jd.cse.lpu.CSE406.SwingTextEditor.blocs.loading_bloc.LoadingBloc;
+import jd.cse.lpu.CSE406.SwingTextEditor.blocs.loading_bloc.LoadingEvent;
+import jd.cse.lpu.CSE406.SwingTextEditor.blocs.loading_bloc.LoadingState;
+import jd.cse.lpu.CSE406.SwingTextEditor.main;
+import org.apache.pdfbox.pdmodel.font.PDType1Font;
+import rst.pdfbox.layout.elements.Document;
+import rst.pdfbox.layout.elements.Paragraph;
 
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
@@ -26,6 +31,13 @@ public class FileEventBloc extends Bloc<FileEvent, FileState> {
         loadingBloc.register(listener);
     }
 
+    private Document generatePDFFromText(String text) throws IOException {
+        Document document = new Document(40, 50, 40, 60);
+        Paragraph paragraph = new Paragraph();
+        paragraph.addText(text, 20, PDType1Font.HELVETICA);
+        document.add(paragraph);
+        return document;
+    }
     @Override
     public FileState getInitialState() {
         return new FileState(null, null);
@@ -55,7 +67,16 @@ public class FileEventBloc extends Bloc<FileEvent, FileState> {
             case FILE_SAVE:
                 try {
                     loadingBloc.add(LoadingEvent.beginLoading(String.format("Saving file as '%s'.", toSave.getFileName().toString())));
-                    Files.write(toSave, event.currentText.getBytes());
+                    switch (main.get_file_ext(toSave).orElse(".txt"))
+                    {
+                        case ".pdf":
+                            generatePDFFromText(event.currentText)
+                                    .save(toSave.toFile());
+                            break;
+                        case ".doc":
+                        case ".txt":
+                            Files.write(toSave, event.currentText.getBytes());
+                    }
                     loadingBloc.add(LoadingEvent.endLoading("File saved."));
                 } catch (Exception e) {
                     e.printStackTrace();

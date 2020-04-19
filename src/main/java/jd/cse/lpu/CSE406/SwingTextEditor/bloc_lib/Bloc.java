@@ -1,4 +1,4 @@
-package bloc_lib;
+package jd.cse.lpu.CSE406.SwingTextEditor.bloc_lib;
 
 import java.util.LinkedList;
 import java.util.List;

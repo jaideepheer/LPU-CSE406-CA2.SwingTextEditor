@@ -1,14 +1,20 @@
-import blocs.fileevent_bloc.FileEvent;
-import blocs.fileevent_bloc.FileEventBloc;
-import blocs.fileevent_bloc.FileState;
-import blocs.loading_bloc.LoadingState;
+package jd.cse.lpu.CSE406.SwingTextEditor;
+
+import jd.cse.lpu.CSE406.SwingTextEditor.blocs.fileevent_bloc.FileEvent;
+import jd.cse.lpu.CSE406.SwingTextEditor.blocs.fileevent_bloc.FileEventBloc;
+import jd.cse.lpu.CSE406.SwingTextEditor.blocs.fileevent_bloc.FileState;
+import jd.cse.lpu.CSE406.SwingTextEditor.blocs.loading_bloc.LoadingState;
 
 import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.text.BadLocationException;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Optional;
 
 public class TextEditor extends JFrame {
     // components
@@ -57,6 +63,7 @@ public class TextEditor extends JFrame {
                 case DONE_LOADING:
                     if(loadingDialog!=null) loadingDialog.dispose();
                     break;
+                // TODO: show errors
                 case ERRORED_LOADING:
                     break;
                 case ABORTED_LOADING:
@@ -68,10 +75,11 @@ public class TextEditor extends JFrame {
     // Constructor to register event handlers
     public TextEditor(FileEventBloc fileEventBloc) {
 
-        // register self with FileEventBloc
+        // register self with FileEventBloc and its loading bloc
         fileEventBloc.register(this::onFileStateUpdate);
         fileEventBloc.registerForLoadingState(this::onLoadingStateUpdate);
 
+        // Add caret position updater
         mainTextArea.addCaretListener(event -> {
             try {
                 JTextArea source = (JTextArea)(event.getSource());
@@ -85,14 +93,8 @@ public class TextEditor extends JFrame {
             }
         });
 
-        ActionListener saveAsFile = event -> {
-            // choose file path
-            JFileChooser fc = new JFileChooser();
-            if (fc.showSaveDialog(mainPanel) == JFileChooser.APPROVE_OPTION) {
-                // send file load event to bloc
-                fileEventBloc.add(FileEvent.fileSaveAsEvent(fc.getSelectedFile().toPath(), mainTextArea.getText()));
-            }
-        };
+        ActionListener saveAsFile = event -> displayFileChooser(true)
+                .ifPresent(file -> fileEventBloc.add(FileEvent.fileSaveAsEvent(file, mainTextArea.getText())));
         ActionListener saveFile = event -> {
             // save if file exists on disk
             if(fileEventBloc.getCurrentState().currentFile != null)
@@ -104,14 +106,10 @@ public class TextEditor extends JFrame {
         };
 
         newMenuItem.addActionListener(event -> main.make_new_editor());
-        openMenuItem.addActionListener(event -> {
-            // ask for path
-            JFileChooser fc = new JFileChooser();
-            if (fc.showOpenDialog(mainPanel) == JFileChooser.APPROVE_OPTION) {
-                // send file load event to bloc
-                fileEventBloc.add(FileEvent.fileOpenEvent(fc.getSelectedFile().toPath()));
-            }
-        });
+        openMenuItem.addActionListener(event ->
+            displayFileChooser(false)
+                    .ifPresent( openFile -> fileEventBloc.add(FileEvent.fileOpenEvent(openFile)))
+        );
         saveMenuItem.addActionListener(saveFile);
         saveAsMenuItem.addActionListener(saveAsFile);
         exitMenuItem.addActionListener(event -> {
@@ -149,6 +147,48 @@ public class TextEditor extends JFrame {
         loadingDialog.pack();
         loadingDialog.setLocationRelativeTo(this);
         loadingDialog.setVisible(true);
+    }
+
+    private Optional<Path> displayFileChooser(boolean toSave)
+    {
+        JFileChooser fc = new JFileChooser();
+        FileNameExtensionFilter txt = new FileNameExtensionFilter("Text Files (*.txt)","txt");
+        FileNameExtensionFilter doc = new FileNameExtensionFilter("DOC Files (*.doc)","doc");
+        FileNameExtensionFilter pdf = new FileNameExtensionFilter("PDF Files (*.pdf)", "pdf");
+        fc.addChoosableFileFilter(doc);
+        fc.addChoosableFileFilter(pdf);
+        fc.setFileFilter(txt);
+        fc.setAcceptAllFileFilterUsed(!toSave);
+
+        // display dialog
+        int chosen;
+        if(toSave)
+            chosen = fc.showSaveDialog(mainPanel);
+        else
+            chosen = fc.showOpenDialog(mainPanel);
+
+        if(chosen == JFileChooser.APPROVE_OPTION)
+        {
+            if(!toSave)
+                return Optional.of(fc.getSelectedFile().toPath());
+
+            Path fpath = fc.getSelectedFile().toPath();
+            // Fix file extension
+            String required_ext;
+            if (fc.getFileFilter() == txt) required_ext = ".txt";
+            else if (fc.getFileFilter() == pdf) required_ext = ".pdf";
+            else if (fc.getFileFilter() == doc) required_ext = ".doc";
+            else required_ext = ".txt";
+
+            // If user typed the correct file ext. in name, then return
+            Optional<String> user_ext = main.get_file_ext(fpath);
+            if(user_ext.isPresent() && user_ext.get().equals(required_ext))
+                return Optional.of(fpath);
+
+            // return correct path with required_ext appended
+            return Optional.of(Paths.get(fpath.toString() + required_ext));
+        }
+        else return Optional.empty();
     }
 
     {

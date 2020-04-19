@@ -1,4 +1,4 @@
-package blocs.loading_bloc;
+package jd.cse.lpu.CSE406.SwingTextEditor.blocs.loading_bloc;
 
 public class LoadingEvent {
     public final String message;
