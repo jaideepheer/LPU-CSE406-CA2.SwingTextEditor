@@ -25,10 +25,10 @@ file system.
 
 ### Program Description
 The given program is written in Java 8.
-It provides a GUI with a editable `JTextArea`, a menu bar and a status bar.
+It provides a GUI with an editable `JTextArea`, a menu bar and a status bar.
 
 The program uses a custom implementation of the [`bloc`](./src/main/java/jd/cse/lpu/CSE406/SwingTextEditor/bloc_lib/Bloc.java) pattern to separate GUI handling from the state management.
-The [`bloc`](./src/main/java/jd/cse/lpu/CSE406/SwingTextEditor/bloc_lib/Bloc.java) pattern is implemented in the classes in the [`/src/main/java/bloc_lib`](./src/main/java/jd/cse/lpu/CSE406/SwingTextEditor/bloc_lib) directory.
+The [`bloc`](./src/main/java/jd/cse/lpu/CSE406/SwingTextEditor/bloc_lib/Bloc.java) pattern is implemented in the classes in the [`/SwingTextEditor/bloc_lib`](./src/main/java/jd/cse/lpu/CSE406/SwingTextEditor/bloc_lib) directory.
 
 The logic to generate and handle the main GUI can be found in the [`TextEditor.java`](./src/main/java/jd/cse/lpu/CSE406/SwingTextEditor/TextEditor.java) file. 
 
